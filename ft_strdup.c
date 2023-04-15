@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/15 21:13:12 by sumjo             #+#    #+#             */
-/*   Updated: 2023/04/15 22:25:34 by sumjo            ###   ########.fr       */
+/*   Created: 2023/03/17 20:55:57 by sumjo             #+#    #+#             */
+/*   Updated: 2023/03/17 22:12:28 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line.h"
 
-# include <stdlib.h>
-# include <unistd.h>
+char	*ft_strdup(const char *s1)
+{
+	char	*arr;
+	int		i;
 
-char		*get_next_line(int fd);
-size_t		ft_strlen(char *s);
-char		*ft_strjoin(char *s1, char *s2);
-void		*ft_memcpy(void *dst, void *src);
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-
-# endif
-#endif
+	i = 0;
+	arr = malloc(ft_strlen(s1) + 1);
+	if (!arr)
+		return (0);
+	while (s1[i])
+	{
+		arr[i] = s1[i];
+		i++;
+	}
+	arr[i] = '\0';
+	return (arr);
+}

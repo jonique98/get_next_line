@@ -1,12 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/15 21:13:12 by sumjo             #+#    #+#             */
+/*   Updated: 2023/04/15 22:18:14 by sumjo            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
-#define GET_NEXT_LINE_H
-#include <stdlib.h>
-#include <unistd.h>
+# define GET_NEXT_LINE_H
 
-size_t		ft_strlen(const char *s);
-char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char const *s1, char const *s2);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
+# include <stdlib.h>
+# include <unistd.h>
 
+char		*get_next_line(int fd);
+size_t		ft_strlen(char *s);
+char		*ft_strjoin(char *s1, char *s2);
+void		*ft_memcpy(void *dst, void *src);
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+
+# endif
 #endif

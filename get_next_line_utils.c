@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/21 12:31:06 by sumjo             #+#    #+#             */
-/*   Updated: 2023/04/14 21:01:51 by sumjo            ###   ########.fr       */
+/*   Created: 2023/04/15 05:52:46 by sumjo             #+#    #+#             */
+/*   Updated: 2023/04/15 21:33:43 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "get_next_line.h"
-#include <stdio.h>
 
-static void	inside(char *arr, char const *s1, char const *s2)
+size_t	ft_strlen(char	*s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+static void	inside(char *arr, char *s1, char *s2)
 {
 	int	i;
 	int	j;
@@ -35,29 +43,50 @@ static void	inside(char *arr, char const *s1, char const *s2)
 	arr[i] = '\0';
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char		*arr;
-	size_t		len;
 
 	if (s1 == 0 && s2 == 0)
-	{
-		arr = malloc(1);
-		*arr = 0;
-		return (arr);
-	}
+		return (0);
 	else if (s1 == 0)
 	{
 		arr = malloc(ft_strlen(s2) + 1);
-		ft_memcpy(arr, s2, ft_strlen(s2));
+		if (!arr)
+		{
+			free(s1);
+			return (0);
+		}
+		ft_memcpy(arr, s2);
 		return (arr);
 	}
-	len = ft_strlen(s1) + ft_strlen(s2);
-	arr = malloc(len + 1);
-	if (!(arr))
+	arr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!arr)
+	{
+		free(s1);
 		return (0);
+	}
 	inside(arr, s1, s2);
-	// free(s1);
-	// free(s2);
+	free(s1);
 	return (arr);
+}
+
+void	*ft_memcpy(void *dst, void *src)
+{
+	size_t				i;
+	const unsigned char	*s;
+	unsigned char		*d;
+
+	d = dst;
+	s = src;
+	i = 0;
+	if (!dst && !src)
+		return (0);
+	while (s[i])
+	{
+		d[i] = s[i];
+		i++;
+	}
+	d[i] = '\0';
+	return (d);
 }

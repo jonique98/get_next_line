@@ -6,38 +6,62 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:27:54 by sumjo             #+#    #+#             */
-/*   Updated: 2023/04/14 22:33:17 by sumjo            ###   ########.fr       */
+/*   Updated: 2023/04/15 22:17:19 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 
-#define BUFF_SIZE 10
-
-char *cut_line(char **brr, char *arr, int index)
+static char	*save_line(char *arr, int i, int j)
 {
-	char *p;
-	int i;
-	int j;
+	char	*p;
+
+	if (!arr || *arr == '\0')
+	{
+		free(arr);
+		return (0);
+	}
+	while (arr[i] && arr[i] != '\n')
+		i++;
+	if (arr[i] == '\0')
+		return (0);
+	p = malloc(ft_strlen(&arr[i]));
+	if (!p)
+	{
+		free(arr);
+		return (0);
+	}
+	i++;
+	while (arr[i])
+		p[j++] = arr[i++];
+	p[j] = '\0';
+	free(arr);
+	return (p);
+}
+
+static char	*cut_line(char *arr)
+{
+	char	*p;
+	int		i;
+	int		j;
 
 	i = 0;
-	j = 0;
-	while (arr[i])
-	{
-		if (arr[i] == '\n')
-			break;
+	j = -1;
+	if (!arr || *arr == 0)
+		return (0);
+	while (arr[i] && arr[i] != '\n')
 		i++;
-	}
-	p = malloc(i + 1);
-	while (j < i)
+	if (arr[i] == '\0')
+		return (arr);
+	p = malloc(i + 2);
+	if (!p)
 	{
-		p[j] = arr[j];
-		j++;
+		free(arr);
+		return (0);
 	}
-	p[j] = '\0';
-	*brr = (arr + index + 1);
+	while (++j <= i)
+		p[j] = arr[j];
+	p[j] = 0;
 	return (p);
 }
 
@@ -46,47 +70,74 @@ static int	is_line(char *arr)
 	int	i;
 
 	i = 0;
-	while (arr[i] && arr[i] != '\0')
+	if (!arr)
+		return (0);
+	while (arr[i])
 	{
 		if (arr[i] == '\n')
-			return (i);
+			return (1);
 		i++;
 	}
-	return (-1);
+	return (0);
+}
+
+char	*read_buff(int fd, char *arr, int read_num)
+{
+	char	*buff;
+
+	buff = malloc(BUFFER_SIZE + 1);
+	if (!buff)
+		return (0);
+	while (read_num != 0)
+	{
+		read_num = read(fd, buff, BUFFER_SIZE);
+		if (read_num == -1)
+		{
+			free (arr);
+			free (buff);
+			return (0);
+		}
+		buff[read_num] = '\0';
+		arr = ft_strjoin(arr, buff);
+		if (is_line(arr))
+		{
+			free(buff);
+			return (arr);
+		}
+	}
+	free(buff);
+	return (arr);
 }
 
 char	*get_next_line(int fd)
 {
-	char			buff[BUFF_SIZE + 1];
-	static char 	*arr;
+	static char		*arr;
+	char			*temp;
 	int				read_num;
-	static int		cnt;
 
-	if (cnt > 0)
+	read_num = 1;
+	if (fd < 0 || BUFFER_SIZE < 0)
+		return (0);
+	if (is_line(arr))
 	{
-		if (is_line(arr) != -1)
-			return (cut_line(&arr, arr, is_line(arr)));
+		temp = cut_line(arr);
+		arr = save_line(arr, 0, 0);
+		return (temp);
 	}
-	while ((read_num = read(fd, buff, BUFF_SIZE)) > 0)
-	{
-		cnt++;
-		arr = ft_strjoin(arr, buff);
-		if (is_line(arr) != -1)
-			return (cut_line(&arr, arr, is_line(arr)));
-	}
-	return 0;
+	arr = read_buff(fd, arr, read_num);
+	temp = cut_line(arr);
+	arr = save_line(arr, 0, 0);
+	return (temp);
 }
 
+// int main()
+// {
+// 	int fd = open("test.txt", O_RDONLY);
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// // 	// get_next_line(fd);
+// // 	// get_next_line(fd);
+// // 	// get_next_line(fd);
 
-
-int main()
-{
-	int fd = open("test.txt", O_RDONLY);
-	// printf("%s 첫번째출력 \n", get_next_line(fd));
-	// printf("%s 두번쨰출력 \n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	// get_next_line(fd);
-	// get_next_line(fd);
-}
+//  	system("leaks a.out");
+// }

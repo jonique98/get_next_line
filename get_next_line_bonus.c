@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:27:54 by sumjo             #+#    #+#             */
-/*   Updated: 2023/04/16 21:32:15 by sumjo            ###   ########.fr       */
+/*   Upinedated: 2023/04/16 22:56:43 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-static char	*save_line(char *arr, int i, int j)
+char	*save_line(char *arr, int i, int j)
 {
-	char	*p;
+	char	*line;
 
 	if (!arr || *arr == '\0')
 	{
@@ -25,23 +25,23 @@ static char	*save_line(char *arr, int i, int j)
 		i++;
 	if (arr[i] == '\0')
 		return (0);
-	p = malloc(ft_strlen(&arr[i]));
-	if (!p)
+	line = malloc(ft_strlen(&arr[i]));
+	if (!line)
 	{
 		free(arr);
 		return (0);
 	}
 	i++;
 	while (arr[i])
-		p[j++] = arr[i++];
-	p[j] = '\0';
+		line[j++] = arr[i++];
+	line[j] = '\0';
 	free(arr);
-	return (p);
+	return (line);
 }
 
-static char	*cut_line(char *arr)
+char	*cut_line(char *arr)
 {
-	char	*p;
+	char	*line;
 	int		i;
 	int		j;
 
@@ -53,19 +53,19 @@ static char	*cut_line(char *arr)
 		i++;
 	if (arr[i] == '\0')
 		return (arr);
-	p = malloc(i + 2);
-	if (!p)
+	line = malloc(i + 2);
+	if (!line)
 	{
 		free(arr);
 		return (0);
 	}
 	while (++j <= i)
-		p[j] = arr[j];
-	p[j] = 0;
-	return (p);
+		line[j] = arr[j];
+	line[j] = 0;
+	return (line);
 }
 
-static int	is_line(char *arr)
+int	is_line(char *arr)
 {
 	int	i;
 
@@ -81,7 +81,7 @@ static int	is_line(char *arr)
 	return (0);
 }
 
-char	*read_buff(int fd, char *arr, int read_num)
+char	*read_buff(int fd, char *arr, int read_num, t_gnl_lst *p)
 {
 	char	*buff;
 
@@ -93,6 +93,7 @@ char	*read_buff(int fd, char *arr, int read_num)
 		read_num = read(fd, buff, BUFFER_SIZE);
 		if (read_num == -1)
 		{
+			free(p);
 			free (arr);
 			free (buff);
 			return (0);
@@ -111,23 +112,37 @@ char	*read_buff(int fd, char *arr, int read_num)
 
 char	*get_next_line(int fd)
 {
-	static char		*arr;
-	char			*temp;
-	int				read_num;
+	static t_gnl_lst	first;
+	t_gnl_lst			*p;
+	char				*temp;
+	int					read_num;
 
 	read_num = 1;
-	if (fd < 0 || BUFFER_SIZE < 0)
+	p = find_lst(&first ,fd);
+	if (p == 0)
 		return (0);
-	if (is_line(arr))
+	if (is_line(p->buff))
 	{
-		temp = cut_line(arr);
-		arr = save_line(arr, 0, 0);
+		temp = cut_line(p->buff);
+		p->buff = save_line(p->buff, 0, 0);
 		return (temp);
 	}
-	arr = read_buff(fd, arr, read_num);
-	if (!arr)
-		return (0);
-	temp = cut_line(arr);
-	arr = save_line(arr, 0, 0);
+	p->buff = read_buff(fd, p->buff, read_num, p);
+	temp = cut_line(p->buff);
+	p->buff = save_line(p->buff, 0, 0);
 	return (temp);
 }
+
+// #include<stdio.h>
+
+
+// #include <fcntl.h>
+// int main()
+// {
+// 	int fd = open("text.txt", O_RDONLY);
+// 	int fd2 = olineen("test2.txt", O_RDONLY);
+// 	linerintf("%s", get_next_line(fd));
+// 	linerintf("%s", get_next_line(fd));
+// 	linerintf("%s", get_next_line(fd2));
+
+// }

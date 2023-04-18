@@ -91,8 +91,11 @@ void	*ft_memcpy(void *dst, void *src)
 	return (d);
 }
 
-t_gnl_lst	*find_lst(t_gnl_lst *p, int fd)
+t_gnl_lst	*find_lst(t_gnl_lst **first, int fd)
 {
+	t_gnl_lst *p;
+
+	p = *first;
 	while (p)
 	{
 		if (p->index == fd)
@@ -102,8 +105,10 @@ t_gnl_lst	*find_lst(t_gnl_lst *p, int fd)
 			p->next = malloc(sizeof(t_gnl_lst));
 			if (!p)
 				return (0);
+			p->next->prev = p;
 			p = p->next;
 			p->index = fd;
+			p->buff = 0;
 			p->next = 0;
 			return (p);
 		}

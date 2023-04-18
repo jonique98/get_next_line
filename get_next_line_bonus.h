@@ -20,6 +20,7 @@ typedef struct s_gnl_lst
 {
 	int					index;
 	char				*buff;
+	struct s_gnl_lst	*prev;
 	struct s_gnl_lst	*next;
 }t_gnl_lst;
 
@@ -27,7 +28,7 @@ char		*get_next_line(int fd);
 size_t		ft_strlen(char *s);
 char		*ft_strjoin(char *s1, char *s2);
 void		*ft_memcpy(void *dst, void *src);
-t_gnl_lst	*find_lst(t_gnl_lst *p, int fd);
+t_gnl_lst	*find_lst(t_gnl_lst **first, int fd);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10

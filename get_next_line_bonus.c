@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:27:54 by sumjo             #+#    #+#             */
-/*   Upinedated: 2023/04/16 22:56:43 by sumjo            ###   ########.fr       */
+/*   Updated: 2023/04/28 00:21:44 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,22 +117,13 @@
 // 	return (0);
 // }
 
-
-
 char	*save_line(char *arr, int i, int j)
 {
 	char		*line;
-	// t_gnl_lst	*temp;
-
+	
 	if (!arr || *arr == '\0')
 	{
-		// temp = p;
-		// if (p->prev)
-		// 	p->prev->next = p->next;
-		// else 
-		// 	p = p->next;
 		free(arr);
-		// free(temp);
 		return (0);
 	}
 	while (arr[i] && arr[i] != '\n')
@@ -211,13 +202,13 @@ char	*read_buff(int fd, char *arr, int read_num)
 			free (buff);
 			return (0);
 		}
-			buff[read_num] = '\0';
-			arr = ft_strjoin(arr, buff);
-			if (is_line(arr))
-			{
-				free(buff);
-				return (arr);
-			}
+		buff[read_num] = '\0';
+		arr = ft_strjoin(arr, buff);
+		if (is_line(arr))
+		{
+			free(buff);
+			return (arr);
+		}
 	}
 	free(buff);
 	return (arr);
@@ -241,7 +232,7 @@ char	*get_next_line(int fd)
 		first->prev = 0;
 		first->next = 0;
 	}	
-	p = find_lst(&first ,fd);
+	p = find_lst(first, fd);
 	if (p == 0)
 		return (0);
 	p->buff = read_buff(fd, p->buff, read_num);
@@ -249,14 +240,16 @@ char	*get_next_line(int fd)
 	p->buff = save_line(p->buff, 0, 0);
 	if (p->buff == 0)
 	{
-		t_gnl_lst	*temp = p;
 		if (p->prev)
-				p->prev->next = p->next;
-		else 
-			p = p->next;
-		free(temp);
+		{
+			p->prev->next = p->next;
+			p->next->prev = p->prev;
+		}
+		else
+			first = p->next;
+		free(p);
 	}
-		return (line);
+	return (line);
 }
 
 // #include<stdio.h>
@@ -265,8 +258,13 @@ char	*get_next_line(int fd)
 // {
 // 	int fd = open("test.txt", O_RDONLY);
 // 	// int fd2 = open("test2.txt", O_RDONLY);
+// 	// int fd3 = open("test3.txt", O_RDONLY);
 // 	printf("%s", get_next_line(fd));
-// 	// printf("%s", get_next_line(fd2));
-// 	system("leaks a.out");
-
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+	
+// system("leaks a.out");
 // }

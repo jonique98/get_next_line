@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 05:52:46 by sumjo             #+#    #+#             */
-/*   Updated: 2023/04/16 23:01:19 by sumjo            ###   ########.fr       */
+/*   Updated: 2023/04/27 23:07:23 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,8 @@ void	*ft_memcpy(void *dst, void *src)
 	return (d);
 }
 
-t_gnl_lst	*find_lst(t_gnl_lst **first, int fd)
+t_gnl_lst	*find_lst(t_gnl_lst *p, int fd)
 {
-	t_gnl_lst *p;
-
-	p = *first;
 	while (p)
 	{
 		if (p->index == fd)
@@ -112,7 +109,7 @@ t_gnl_lst	*find_lst(t_gnl_lst **first, int fd)
 			p->next = 0;
 			return (p);
 		}
-		p = p->next;		
+		p = p->next;
 	}
 	return (0);
 }

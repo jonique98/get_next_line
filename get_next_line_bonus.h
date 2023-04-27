@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:13:12 by sumjo             #+#    #+#             */
-/*   Updated: 2023/04/16 22:45:52 by sumjo            ###   ########.fr       */
+/*   Updated: 2023/04/27 23:13:06 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char		*get_next_line(int fd);
 size_t		ft_strlen(char *s);
 char		*ft_strjoin(char *s1, char *s2);
 void		*ft_memcpy(void *dst, void *src);
-t_gnl_lst	*find_lst(t_gnl_lst **first, int fd);
+t_gnl_lst	*find_lst(t_gnl_lst *p, int fd);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10

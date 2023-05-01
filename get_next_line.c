@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:27:54 by sumjo             #+#    #+#             */
-/*   Updated: 2023/04/16 21:32:15 by sumjo            ###   ########.fr       */
+/*   Updated: 2023/05/01 22:02:34 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,7 @@ char	*read_buff(int fd, char *arr, int read_num)
 		buff[read_num] = '\0';
 		arr = ft_strjoin(arr, buff);
 		if (is_line(arr))
-		{
-			free(buff);
-			return (arr);
-		}
+			break;
 	}
 	free(buff);
 	return (arr);
@@ -118,12 +115,6 @@ char	*get_next_line(int fd)
 	read_num = 1;
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (0);
-	if (is_line(arr))
-	{
-		temp = cut_line(arr);
-		arr = save_line(arr, 0, 0);
-		return (temp);
-	}
 	arr = read_buff(fd, arr, read_num);
 	if (!arr)
 		return (0);
@@ -131,3 +122,27 @@ char	*get_next_line(int fd)
 	arr = save_line(arr, 0, 0);
 	return (temp);
 }
+
+// #include<stdio.h>
+// #include <fcntl.h>
+// #include<time.h>
+// int main()
+// {
+// 	clock_t start = clock();	
+// 	int fd1 = open("test.txt", O_RDONLY);
+// 	int fd2 = open("test2.txt", O_RDONLY);
+// 	// int fd3 = open("test3.txt", O_RDONLY);
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd2));
+// 	clock_t end = clock();
+// 	printf("소요시간 %lf\n", (double)(end - start) / CLOCKS_PER_SEC);
+// }

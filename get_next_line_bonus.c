@@ -6,11 +6,12 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 21:50:17 by josumin           #+#    #+#             */
-/*   Updated: 2023/05/02 22:24:07 by sumjo            ###   ########.fr       */
+/*   Updated: 2023/05/02 22:31:10 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+#include<stdio.h>
 
 char	*save_line(char *arr, int i, int j)
 {
@@ -139,7 +140,7 @@ char	*get_next_line(int fd)
 	p->buff = read_buff(fd, p->buff, read_num);
 	line = cut_line(p->buff, line);
 	p->buff = save_line(p->buff, 0, 0);
-	if (line == 0 || p->buff == 0)
+	if (line == (void *)0 || p->buff == (void *)0)
 		free_lst(&first, p);
 	return (line);
 }
@@ -150,17 +151,8 @@ char	*get_next_line(int fd)
 // int main()
 // {
 // 	int fd1 = open("test.txt", O_RDONLY);
-// 	int fd2 = open("test2.txt", O_RDONLY);
+// 	// int fd2 = open("test2.txt", O_RDONLY);
 // 	// int fd3 = open("test3.txt", O_RDONLY);
 // 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd2));
-// 	printf("%s", get_next_line(fd2));
 // 	// system("leaks a.out");
 // }

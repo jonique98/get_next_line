@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:27:54 by sumjo             #+#    #+#             */
-/*   Updated: 2023/05/02 22:18:38 by sumjo            ###   ########.fr       */
+/*   Updated: 2023/05/02 22:35:26 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*read_buff(int fd, char *arr, int read_num)
 		buff[read_num] = '\0';
 		arr = ft_strjoin(arr, buff);
 		if (is_line(arr))
-			break;
+			break ;
 	}
 	free(buff);
 	return (arr);

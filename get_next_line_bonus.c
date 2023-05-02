@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 21:50:17 by josumin           #+#    #+#             */
-/*   Updated: 2023/05/02 21:59:48 by sumjo            ###   ########.fr       */
+/*   Updated: 2023/05/02 22:24:07 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ char	*save_line(char *arr, int i, int j)
 	}
 	line = malloc(ft_strlen(&arr[i]));
 	if (!line)
+	{
+		free (arr);
 		return (0);
+	}
 	i++;
 	while (arr[i])
 		line[j++] = arr[i++];
@@ -136,7 +139,7 @@ char	*get_next_line(int fd)
 	p->buff = read_buff(fd, p->buff, read_num);
 	line = cut_line(p->buff, line);
 	p->buff = save_line(p->buff, 0, 0);
-	if (line == 0)
+	if (line == 0 || p->buff == 0)
 		free_lst(&first, p);
 	return (line);
 }

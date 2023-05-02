@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:27:54 by sumjo             #+#    #+#             */
-/*   Updated: 2023/05/01 22:02:34 by josumin          ###   ########.fr       */
+/*   Updated: 2023/05/02 22:18:38 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*save_line(char *arr, int i, int j)
+char	*save_line(char *arr, int i, int j)
 {
-	char	*p;
+	char		*line;
 
-	if (!arr || *arr == '\0')
+	if (!arr)
+		return (0);
+	else if (*arr == '\0')
 	{
 		free(arr);
 		return (0);
@@ -24,24 +26,24 @@ static char	*save_line(char *arr, int i, int j)
 	while (arr[i] && arr[i] != '\n')
 		i++;
 	if (arr[i] == '\0')
-		return (0);
-	p = malloc(ft_strlen(&arr[i]));
-	if (!p)
-	{
+	{	
 		free(arr);
 		return (0);
 	}
+	line = malloc(ft_strlen(&arr[i]));
+	if (!line)
+		return (0);
 	i++;
 	while (arr[i])
-		p[j++] = arr[i++];
-	p[j] = '\0';
+		line[j++] = arr[i++];
+	line[j] = '\0';
 	free(arr);
-	return (p);
+	return (line);
 }
 
-static char	*cut_line(char *arr)
+char	*cut_line(char *arr, char *brr)
 {
-	char	*p;
+	char	*line;
 	int		i;
 	int		j;
 
@@ -51,18 +53,18 @@ static char	*cut_line(char *arr)
 		return (0);
 	while (arr[i] && arr[i] != '\n')
 		i++;
-	if (arr[i] == '\0')
-		return (arr);
-	p = malloc(i + 2);
-	if (!p)
+	if (arr[i] == 0)
+		i--;
+	line = malloc(i + 2);
+	if (!line)
 	{
-		free(arr);
+		free(brr);
 		return (0);
 	}
 	while (++j <= i)
-		p[j] = arr[j];
-	p[j] = 0;
-	return (p);
+		line[j] = arr[j];
+	line[j] = 0;
+	return (line);
 }
 
 static int	is_line(char *arr)
@@ -113,12 +115,13 @@ char	*get_next_line(int fd)
 	int				read_num;
 
 	read_num = 1;
+	temp = 0;
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (0);
 	arr = read_buff(fd, arr, read_num);
 	if (!arr)
 		return (0);
-	temp = cut_line(arr);
+	temp = cut_line(arr, temp);
 	arr = save_line(arr, 0, 0);
 	return (temp);
 }

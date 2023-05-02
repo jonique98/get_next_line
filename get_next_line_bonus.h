@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:13:12 by sumjo             #+#    #+#             */
-/*   Updated: 2023/05/01 21:50:56 by josumin          ###   ########.fr       */
+/*   Updated: 2023/05/02 18:54:23 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ typedef struct s_dummy_lst
 }t_util_lst;
 
 char		*get_next_line(int fd);
-int			is_line_or_strlen(char *arr, int num);
-char		*ft_strjoin(char *s1, char *s2);
+int			ft_strlen(char *arr);
+int			is_line(char *arr);
+char		*ft_strjoin(char *s1, char *s2, int i, int j);
 void		*ft_memcpy(void *dst, void *src);
 t_gnl_lst	*find_lst(t_gnl_lst *p, int fd);
 

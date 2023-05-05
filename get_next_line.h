@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 21:13:12 by sumjo             #+#    #+#             */
-/*   Updated: 2023/04/15 22:25:34 by sumjo            ###   ########.fr       */
+/*   Updated: 2023/05/03 18:01:48 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char		*get_next_line(int fd);
 size_t		ft_strlen(char *s);
 char		*ft_strjoin(char *s1, char *s2);
 void		*ft_memcpy(void *dst, void *src);
+void free_arr(char **original, char *arr);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10

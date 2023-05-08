@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:27:54 by sumjo             #+#    #+#             */
-/*   Updated: 2023/05/05 22:28:35 by sumjo            ###   ########.fr       */
+/*   Updated: 2023/05/08 22:26:41 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*save_line(char **backup, char *arr, int i, int j)
 	return (line);
 }
 
-char	*cut_line(char **backup, char *arr, char *brr)
+char	*cut_line(char **backup, char *arr)
 {
 	char	*line;
 	int		i;
@@ -50,10 +50,7 @@ char	*cut_line(char **backup, char *arr, char *brr)
 		i--;
 	line = malloc(i + 2);
 	if (!line)
-	{
-		free(brr);
 		return (free_arr(backup));
-	}
 	while (j <= i)
 	{
 		line[j] = arr[j];
@@ -68,16 +65,13 @@ char	*read_buff(int fd, char **backup, char *arr, int read_num)
 	char	*buff;
 
 	buff = malloc(BUFFER_SIZE + 1);
-	if (!buff) {
-		printf("here");
+	if (!buff)
 		return (free_arr(backup));
-	}
 	while (read_num != 0)
 	{
 		read_num = read(fd, buff, BUFFER_SIZE);
 		if (read_num == -1)
 		{
-		printf("here1");
 			free (buff);
 			return (free_arr(backup));
 		}
@@ -100,27 +94,27 @@ char	*get_next_line(int fd)
 	temp = 0;
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (0);
-	arr = read_buff(fd, &arr, arr, read_num);
-	if (!arr)
-		return (0);
-	temp = cut_line(&arr, arr, temp);
+	if (is_line(arr) != 1)
+		arr = read_buff(fd, &arr, arr, read_num);
+	temp = cut_line(&arr, arr);
 	arr = save_line(&arr, arr, 0, 0);
 	return (temp);
 }
 
-#include<fcntl.h>
+// #include<fcntl.h>
 
-int main()
-{
-	// int fd = open("test.txt",O_RDONLY);
-	printf("%s",get_next_line(1));
-	// printf("%s",get_next_line(1));
-	// printf("%s",get_next_line(fd));
-	// printf("%s",get_next_line(fd));
-	// printf("%s",get_next_line(fd));
-	// printf("%s",get_next_line(fd));
-	// printf("%s",get_next_line(fd));
-	// printf("%s",get_next_line(fd));
-	// printf("%s",get_next_line(fd));
-}
-
+// int main()
+// {
+// 	int fd = open("test.txt",O_RDONLY);
+// 	// printf("%s",get_next_line(1));
+// 	// printf("%s",get_next_line(1));
+// 	printf("%s",get_next_line(fd));
+// 	printf("%s",get_next_line(fd));
+// 	printf("%s",get_next_line(fd));
+// 	printf("%s",get_next_line(fd));
+// 	printf("%s",get_next_line(fd));
+// 	printf("%s",get_next_line(fd));
+// 	printf("%s",get_next_line(fd));
+// 	printf("%s",get_next_line(fd));
+// 	printf("%s",get_next_line(fd));
+// }

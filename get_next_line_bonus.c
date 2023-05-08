@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 21:50:17 by josumin           #+#    #+#             */
-/*   Updated: 2023/05/05 22:34:13 by sumjo            ###   ########.fr       */
+/*   Updated: 2023/05/08 22:26:23 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,26 +118,27 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-#include<fcntl.h>
-#include<stdio.h>
+// #include<fcntl.h>
+// #include<stdio.h>
 
-int main()
-{
-	int fd = open("test.txt",O_RDONLY);
-	int fd2 = open("test2.txt",O_RDONLY);
-	int fd3 = open("test3.txt",O_RDONLY);
-	int fd4 = open("test4.txt",O_RDONLY);
-	printf("%s",get_next_line(fd));
-	printf("%s",get_next_line(fd2));
-	printf("%s",get_next_line(fd));
-	printf("%s",get_next_line(fd2));
-	printf("%s",get_next_line(fd4));
-	printf("%s",get_next_line(fd3));
-	printf("%s",get_next_line(fd4));
-	printf("%s",get_next_line(fd4));
-	printf("%s",get_next_line(fd3));
-	printf("%s",get_next_line(fd4));
-	printf("%s",get_next_line(fd4));
-	printf("%s",get_next_line(fd));
-	
-}
+// int main()
+// {
+// 	int fd = open("test.txt",O_RDONLY);
+// // 	int fd2 = open("test2.txt",O_RDONLY);
+// // 	int fd3 = open("test3.txt",O_RDONLY);
+// // 	int fd4 = open("test4.txt",O_RDONLY);
+// 	printf("%s",get_next_line(fd));
+// // 	printf("%s",get_next_line(fd2));
+// 	printf("%s",get_next_line(fd));
+// // 	printf("%s",get_next_line(fd2));
+// // 	printf("%s",get_next_line(fd4));
+// // 	printf("%s",get_next_line(fd3));
+// // 	printf("%s",get_next_line(fd4));
+// // 	printf("%s",get_next_line(fd4));
+// // 	printf("%s",get_next_line(fd3));
+// // 	printf("%s",get_next_line(fd4));
+// // 	printf("%s",get_next_line(fd4));
+// 	printf("%s",get_next_line(fd));
+// 	printf("%s",get_next_line(fd));
+// 	system("leaks a.out");
+// }
